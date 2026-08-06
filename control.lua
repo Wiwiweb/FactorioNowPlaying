@@ -8,9 +8,9 @@ function print_music_track(player_index)
       local track_info = mod_data.get(current_track)
       local track_title = track_info.title and track_info.title or current_track
       if track_info.variable then
-        track_title = { "", track_title, " ", {"now-playing.variable"} }
+        track_title = { "", track_title, " ", { "now-playing.variable" } }
       end
-      player.print({ "now-playing.now-playing", track_title },
+      player.print({ "", "[font=default-semibold]", { "now-playing.now-playing" }, "[/font] ", track_title },
         {
           color = { r = 148, g = 246, b = 255 },
           sound = defines.print_sound.never,
