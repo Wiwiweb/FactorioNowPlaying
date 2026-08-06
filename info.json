@@ -1,0 +1,12 @@
+{
+    "name": "now-playing",
+    "version": "1.0.0",
+    "title": "Now Playing ♫",
+    "author": "Wiwiweb",
+    "factorio_version": "2.1",
+    "package": {
+      "git_publish_branch": "main",
+      "removeZipAfterPublish": true,
+      "ignore": ["*.kra"]
+    }
+}
