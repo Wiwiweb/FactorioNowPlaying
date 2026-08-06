@@ -1,32 +1,82 @@
-local mod_data = prototypes["mod_data"]["now-playing-ambient-sound-info"]
+require("scripts/util")
+require("scripts/stats-gui")
+require("scripts/player-data")
 
-function print_music_track(player_index)
-  local player = game.get_player(player_index)
-  if player and player.connected then
-    local current_track = player.current_music
-    if current_track and current_track ~= "" then
-      local track_info = mod_data.get(current_track)
-      local track_title
-      if track_info then -- Mod data could be missing this info if ambient-sound was modified by another mod after now-playing
-        track_title = track_info.title and track_info.title or current_track
-        if track_info.variable then
-          track_title = { "", track_title, " ", { "now-playing.variable" } }
-        end
-      else
-        track_title = current_track
-      end
-      player.print({ "", "[font=default-semibold]", { "now-playing.now-playing" }, "[/font] ", track_title },
-        {
-          color = { r = 148, g = 246, b = 255 },
-          sound = defines.print_sound.never,
-          skip = defines.print_skip.never,
-          game_state = false,
-        }
-      )
-    end
-  end
+function print_music_track(player)
+  local track_title = get_music_track_title(player)
+  player.print({ "", "[font=default-semibold]", { "now-playing.now-playing" }, "[/font] ", track_title },
+    {
+      color = { r = 148, g = 246, b = 255 },
+      sound = defines.print_sound.never,
+      skip = defines.print_skip.never,
+      game_state = false,
+    })
 end
 
+
+script.on_init(function()
+  storage.players = {}
+  for i, player in pairs(game.players) do
+    player_init(player, i)
+    gui_build(player, storage.players[i])
+  end
+end)
+
+script.on_event(defines.events.on_player_created, function(event)
+  local player = game.get_player(event.player_index)
+  player_init(player, event.player_index)
+  gui_build(player, storage.players[event.player_index])
+end)
+
+script.on_event(defines.events.on_player_removed, function(event)
+  storage.players[event.player_index] = nil
+end)
+
+
+script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
+  if event.setting ~= "nowplaying-padding-lines" then
+    return
+  end
+
+  local player = game.get_player(event.player_index)
+  if player then
+    local player_table = storage.players[event.player_index]
+    update_settings(player, player_table)
+    gui_destroy(player_table)
+    gui_build(player, player_table)
+  end
+end)
+
+script.on_event(defines.events.on_player_controller_changed, function(event)
+  local player = game.get_player(event.player_index)
+  if not player then
+    return
+  end
+  local player_table = storage.players[event.player_index]
+  if not player_table then
+    return
+  end
+  gui_update(player, player_table)
+end)
+
+script.on_event(
+  { defines.events.on_player_display_resolution_changed, defines.events.on_player_display_scale_changed },
+  --- @param e EventData.on_player_display_resolution_changed|EventData.on_player_display_scale_changed
+  function(e)
+    local player = game.get_player(e.player_index)
+    if not player then
+      return
+    end
+    local player_table = storage.players[e.player_index]
+    gui_update(player, player_table)
+  end
+)
+
+
 script.on_event(defines.events.on_player_music_changed, function(event)
-  print_music_track(event.player_index)
+  local player = game.get_player(event.player_index)
+  if player and player.connected then
+    print_music_track(player)
+    gui_update_caption_only(player, storage.players[event.player_index])
+  end
 end)
