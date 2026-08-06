@@ -1,5 +1,11 @@
 ---------------------------------------------------------------------------------------------------
-Version: 1.0.0
+Version: 1.0.1
 Date: ???
+  Bugfixes:
+    - Fix crash if a mod modifies music data after now-playing is loaded.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 2026-08-05
   Features:
     - Initial release
