@@ -6,15 +6,14 @@ function print_music_track(player)
   local track_title = get_music_track_title(player)
   if track_title ~= "" then
     player.print({ "", "[font=default-semibold]", { "now-playing.now-playing" }, "[/font] ", track_title },
-    {
-      color = { r = 148, g = 246, b = 255 },
-      sound = defines.print_sound.never,
-      skip = defines.print_skip.never,
-      game_state = false,
-    })
+      {
+        color = { r = 148, g = 246, b = 255 },
+        sound = defines.print_sound.never,
+        skip = defines.print_skip.never,
+        game_state = false,
+      })
   end
 end
-
 
 script.on_init(function()
   storage.players = {}
@@ -36,7 +35,7 @@ end)
 
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
-  if event.setting ~= "nowplaying-padding-lines" then
+  if string.sub(event.setting, 1, 10) ~= "nowplaying" then
     return
   end
 

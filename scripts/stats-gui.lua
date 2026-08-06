@@ -17,7 +17,7 @@ function gui_build(player, player_table)
   local label = window.add({
     type = "label",
     style = "nowplaying_statsgui_label",
-    caption = "♫ " .. get_music_track_title(player),
+    caption = { "", "♫ ", get_music_track_title(player) }
   })
   player_table.stats_window = window
   player_table.stats_label = label
