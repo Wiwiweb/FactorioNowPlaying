@@ -3,6 +3,7 @@ Version: 1.0.1
 Date: ???
   Changes:
     - The song title will now be shown in the top right of the screen, in a similar style as the in-game UPS counter.
+    - A new setting (default false) allows printing the song title in chat as before.
 
   Bugfixes:
     - Fix crash if a mod modifies music data after now-playing is loaded.

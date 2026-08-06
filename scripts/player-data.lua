@@ -9,6 +9,7 @@ function update_settings(player, player_table)
   local mod_settings = player.mod_settings
   local settings = {
     padding_lines = mod_settings["nowplaying-padding-lines"].value,
+    print_chat = mod_settings["nowplaying-print-chat"].value,
   }
   player_table.settings = settings
 end

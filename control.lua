@@ -4,13 +4,15 @@ require("scripts/player-data")
 
 function print_music_track(player)
   local track_title = get_music_track_title(player)
-  player.print({ "", "[font=default-semibold]", { "now-playing.now-playing" }, "[/font] ", track_title },
+  if track_title ~= "" then
+    player.print({ "", "[font=default-semibold]", { "now-playing.now-playing" }, "[/font] ", track_title },
     {
       color = { r = 148, g = 246, b = 255 },
       sound = defines.print_sound.never,
       skip = defines.print_skip.never,
       game_state = false,
     })
+  end
 end
 
 
@@ -76,7 +78,10 @@ script.on_event(
 script.on_event(defines.events.on_player_music_changed, function(event)
   local player = game.get_player(event.player_index)
   if player and player.connected then
-    print_music_track(player)
-    gui_update_caption_only(player, storage.players[event.player_index])
+    local player_table = storage.players[event.player_index]
+    gui_update_caption_only(player, player_table)
+    if player_table.settings.print_chat then
+      print_music_track(player)
+    end
   end
 end)
