@@ -15,5 +15,5 @@ function get_music_track_title(player)
     end
     return track_title
   end
-  return "(No music)"
+  return { "now-playing.no-music" }
 end
