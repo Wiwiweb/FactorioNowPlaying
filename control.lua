@@ -2,8 +2,8 @@ function print_music_track(player_index)
     local player = game.get_player(player_index)
     if player and player.connected then
         local current_track = player.current_music
-        if current_track then
-            player.print("♫ Now Playing: " .. current_track,
+        if current_track and current_track ~= "" then
+            player.print({"now-playing.now-playing", current_track},
                 {
                     color = {r=148, g=246, b=255},
                     sound = defines.print_sound.never,
