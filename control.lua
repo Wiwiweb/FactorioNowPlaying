@@ -15,13 +15,14 @@ function print_music_track(player)
   end
 end
 
-script.on_init(function()
+function init()
   storage.players = {}
   for i, player in pairs(game.players) do
     player_init(player, i)
     gui_build(player, storage.players[i])
   end
-end)
+end
+script.on_init(init)
 
 script.on_event(defines.events.on_player_created, function(event)
   local player = game.get_player(event.player_index)

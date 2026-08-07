@@ -1,7 +1,9 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: ????
-  Changes:
+  Bugfixes:
+    - Fixed crash when updating from 1.0.0.
+
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.2
 Date: 2026-08-06
@@ -16,7 +18,7 @@ Date: 2026-08-06
     - A new setting (default false) allows printing the song title in chat as before.
 
   Bugfixes:
-    - Fix crash if a mod modifies music data after now-playing is loaded.
+    - Fixed crash if a mod modifies music data after now-playing is loaded.
 
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.0
